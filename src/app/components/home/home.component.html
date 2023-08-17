@@ -1,0 +1,254 @@
+<div class="header" style="padding: 1rem 0; text-align: center; box-shadow: 0px 10px 24px -8px rgba(0,0,0,0.78);">
+    <img src="../../../assets/img/header-logo.png"/>
+  </div>
+  <div class="divTable p-3">
+    <div class="text-center m-4">
+      <h4 style="font-weight: 600;">INVENTARIO DE UNIDADES SEMINUEVAS GRUPO RIVERO AL {{day}} DE {{month}}</h4>
+    </div>
+
+    <div>
+        <mat-form-field  class="text-right">
+            <input matInput [(ngModel)]="busqueda" (keypress)="filtrar()" (keydown)="filtrar()" placeholder="Buscar" #input>
+          </mat-form-field>
+      
+          <button class="btn btn-success m-2 float-right" (click)="exportexcel()">Exportar Excel</button>
+    </div>
+  
+
+  
+    <!-- seccion de la paginacion-->
+    
+    <!-- Termina seccion de paginacion-->
+  
+  <div class="mat-elevation-z8" style="overflow: scroll">
+    <!-- <table mat-table [dataSource]="dataSource" class="d" style="width: 100%" id="excel-table" matSort>
+  
+
+      <ng-container matColumnDef="agency" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Suc </th>
+        <td mat-cell *matCellDef="let element"> {{element.agency | trim }} </td>
+      </ng-container>
+  
+
+      <ng-container matColumnDef="tresesenta"  >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> 360 </th>
+        <td mat-cell *matCellDef="let element" style="font-size: 15px;">{{element.image | img360 }}
+          <mat-icon *ngIf="element.image == null" style="color:gray">camera_alt</mat-icon>
+          <mat-icon *ngIf="element.image != null" style="color:green;cursor:pointer;" (click) = "openImages(element)" data-bs-toggle="modal" data-bs-target="#modalImages">camera_alt</mat-icon>
+        </td>
+      </ng-container>
+      
+
+      <ng-container matColumnDef="carid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> #INV </th>
+        <td mat-cell *matCellDef="let element"> {{element.carid}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="make">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> MARCA </th>
+        <td mat-cell *matCellDef="let element"> {{element.make}} </td>
+      </ng-container> 
+  
+      <ng-container matColumnDef="model">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> MODELO </th>
+        <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="typeid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO </th>
+        <td mat-cell *matCellDef="let element"> {{element.typeid | tipoAuto}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="year">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> AÑO </th>
+        <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="color" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> COLOR </th>
+        <td mat-cell *matCellDef="let element"> {{element.color}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="trans">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> TRANSMISION</th>
+        <td mat-cell *matCellDef="let element" > {{element.trans}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> DIAS </th>
+        <td mat-cell *matCellDef="let element"> {{element.date | days}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="km">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> KMS </th>
+        <td mat-cell *matCellDef="let element"> {{element.km | number : '1.0-0'}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="price"  >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  PRECIO </th>
+        <td mat-cell *matCellDef="let element"> {{element.price | currency : 'CAD' : 'symbol-narrow':'4.0-0'}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> EQUIPAMIENTO </th>
+        <td mat-cell *matCellDef="let element"  > 
+          <div *ngIf="element.description != null"  (click)="openDescriptions(element)" class=" manita carDescription"  data-bs-toggle="modal" data-bs-target="#modalDescription">
+            {{element.description}}
+          </div>
+          <div *ngIf="element.description == null" style="width: 100%">
+            {{element.description}}
+          </div>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div> -->
+    
+
+    <!-- Inicia seccion de la tabla de contanido -->
+    <table class="table table-striped" data-search="true">
+        <thead>
+          <tr>
+            <th (click)="sorteo('letra','agency')" [ngClass]="columnaActiva == 'agency' ? 'columnaActiva' : 'columnaInc'" scope="col">SUC <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('letra','tresesenta')" [ngClass]="columnaActiva == 'tresesenta' ? 'columnaActiva' : 'columnaInc'" scope="col">360 <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('num','carid')" [ngClass]="columnaActiva == 'carid' ? 'columnaActiva' : 'columnaInc'" scope="col">#Inv <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('letra','make')" [ngClass]="columnaActiva == 'make' ? 'columnaActiva' : 'columnaInc'" scope="col">MARCA <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('letra','model')" [ngClass]="columnaActiva == 'model' ? 'columnaActiva' : 'columnaInc'" scope="col">MODELO <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('num','typeid')" [ngClass]="columnaActiva == 'typeid' ? 'columnaActiva' : 'columnaInc'" scope="col">TIPO <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('num','year')" [ngClass]="columnaActiva == 'year' ? 'columnaActiva' : 'columnaInc'" scope="col">AÑO <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('letra','color')" [ngClass]="columnaActiva == 'color' ? 'columnaActiva' : 'columnaInc'" scope="col">COLOR <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('letra','trans')" [ngClass]="columnaActiva == 'trans' ? 'columnaActiva' : 'columnaInc'" scope="col">TRANSMISION <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('num','date')" [ngClass]="columnaActiva == 'date' ? 'columnaActiva' : 'columnaInc'" scope="col">DIAS <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('num','km')" [ngClass]="columnaActiva == 'km' ? 'columnaActiva' : 'columnaInc'" scope="col">KMS <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th (click)="sorteo('num','price')" [ngClass]="columnaActiva == 'price' ? 'columnaActiva' : 'columnaInc'" scope="col">PRECIO <mat-icon style="font-size: 15px;margin-bottom:-10px">unfold_more</mat-icon></th>
+            <th scope="col">EQUIPAMIENTO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let car of carsList; let i = index " >
+            <td>{{car.agency | trim }}</td>
+            <td *ngIf="car.image == null" >
+              <mat-icon [ngStyle]="{'color':'gray'}">camera_alt</mat-icon>
+            </td> 
+            <td *ngIf="car.image !== null" >
+              <mat-icon [ngStyle]="{'color':'green', 'cursor':'pointer'}" (click) = "openImages(car)" data-bs-toggle="modal" data-bs-target="#modalImages">camera_alt</mat-icon>
+            </td>
+            <td>{{car.carid}}</td>
+            <td>{{car.make}}</td>
+            <td>{{car.model}}</td>
+            <td>{{car.typeid | tipoAuto}}</td>
+            <td>{{car.year}}</td>
+            <td>{{car.color}}</td>
+            <td>{{car.trans}}</td>
+            <td>{{car.date | days}}</td>
+            <td>{{car.km | number : '1.0-0'}}</td>
+            <td>{{car.price | currency : 'CAD' : 'symbol-narrow':'4.0-0'}}</td>
+            <td class="carDescription" (click)="openDescriptions(car)" data-bs-toggle="modal" data-bs-target="#modalDescription" style="cursor: pointer;" >{{car.description}}</td>
+          </tr>
+  
+        </tbody>
+      </table>
+
+      <table class="table table-striped mt-4" data-search="true" id="excel-table" hidden>
+        <thead>
+          <tr>
+            <th scope="col">SUC</th>
+            <th scope="col">360</th>
+            <th scope="col">#Inv</th>
+            <th scope="col">MARCA</th>
+            <th scope="col">MODELO</th>
+            <th scope="col">TIPO</th>
+            <th scope="col">AÑO</th>
+            <th scope="col">COLOR</th>
+            <th scope="col">TRANSMISION</th>
+            <th scope="col">DIAS</th>
+            <th scope="col">KMS</th>
+            <th scope="col">PRECIO</th>
+            <th scope="col">EQUIPAMIENTO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let car of carsList ; let i = index" >
+            <td>{{car.agency | trim }}</td>
+            <td *ngIf="car.image == null" >
+              NO
+            </td> 
+            <td *ngIf="car.image !== null" >
+              SI
+            </td>
+            <td>{{car.carid}}</td>
+            <td>{{car.make}}</td>
+            <td>{{car.model}}</td>
+            <td>{{car.typeid | tipoAuto}}</td>
+            <td>{{car.year}}</td>
+            <td>{{car.color}}</td>
+            <td>{{car.trans}}</td>
+            <td>{{car.date | days}}</td>
+            <td>{{car.km | number : '1.0-0'}}</td>
+            <td>{{car.price | currency : 'CAD' : 'symbol-narrow':'4.0-0'}}</td>
+            <td>{{car.description}}</td>
+          </tr>
+  
+        </tbody>
+      </table>
+      </div>
+    
+      <!-- Termina seccion de la tabla de contanido-->
+   
+    <!-- Inicia seccion del modal de descripcion -->
+    
+    <div class="modal fade" id="modalDescription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h2 style="width: 100%"> {{carSelected.carid}} - {{carSelected.make}} {{carSelected.model}} {{carSelected.year}} </h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+  
+          <div> 
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor = "let description of listaDescripcion">- {{description}}</li>
+            </ul>
+          </div>  
+  
+        </div>
+      </div>
+    </div>
+     <!-- Termina seccion del modal de descripcion-->
+  
+     <!-- Inicia seccion del modal de carrousel-->
+  
+     <div class="modal fade" id="modalImages" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="text-center" style="width: 100%"> {{carSelected.carid}} - {{carSelected.make}} {{carSelected.model}} {{carSelected.year}} </h2>
+            <button  type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+  
+                      <div  id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" >
+                        <div class="carousel-inner">
+                          <div class="carousel-item active fondomodal">
+                            <img [src]= "images[position]" class="d-block w-100 imagencarrusel" alt="Imagen no disponible. Disculpe las molestias. Continue desplazando.">
+                          </div>
+                        </div>
+  
+                        <button *ngIf="position != 0" (click)="prev()" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button *ngIf="position != images.length - 1" (click)="next()"class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+  
+                      </div>
+  
+          <div class="modal-footer">
+            
+        </div>
+      </div>
+     <!-- Termina seccion del modal de carrousel -->
+  </div>

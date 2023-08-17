@@ -1,0 +1,61 @@
+
+
+.divTable{
+    padding: 2rem;
+}
+
+.carDescription{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 80px;
+    min-width: 20px
+}
+
+::ng-deep .mat-sort-header-container{
+    text-align: left;
+    padding-left: 10px;
+}
+
+
+td{
+    text-align: left;
+    padding-left: 10px!important;
+    padding-right: 5px!important;
+    min-width: 5%;
+    border-right: 1.5px solid #ebedef;
+}
+
+.columnaInc{
+    cursor: pointer;
+}
+
+.columnaActiva{
+    background-color: rgb(192, 206, 192);
+    cursor: pointer;
+}
+
+tr:nth-child(even){
+    background-color:   #ebedef;
+}
+
+
+.manita{
+    cursor: pointer;
+}
+
+.imagencarrusel{
+    padding: 1em;
+}
+
+.fondomodal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 40em;
+    background-image: url('../../../assets/img/car-placeholder.png');
+    background-color: rgb(74, 74, 74);
+    background-repeat: no-repeat;
+    background-position: center;
+}

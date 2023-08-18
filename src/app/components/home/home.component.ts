@@ -127,6 +127,16 @@ export class HomeComponent implements OnInit {
   filtrar(){
 
     this.apiService.getAllCars().subscribe(resp =>{
+
+      for (let i=0; i < resp.data.length; i++){
+        
+        if (resp.data[i].image == null){
+          resp.data[i].tresesenta = "NO";
+        } else {
+          resp.data[i].tresesenta = "SI";
+        }
+      }
+      
       this.carsList = resp.data;
         this.carsList = this.carsList.filter((data) =>  JSON.stringify(data).toLowerCase().indexOf(this.busqueda.toLowerCase()) !== -1);
 
